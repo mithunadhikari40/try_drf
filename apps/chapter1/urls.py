@@ -18,11 +18,14 @@ from django.urls import path, include
 
 from apps.chapter1 import views
 
-
 urlpatterns = [
     # for students
     path('<int:pk>', views.student_detail),
     path('', views.student_list),
     path('create', views.create_student),
+    path('update', views.update_student),
+    path('delete', views.delete_student),
+    path('list', views.get_student),
+    path('classbasedstudent', views.StudentApiView.as_view())
 
 ]
