@@ -248,3 +248,77 @@ def delete_student(request):
         # return HttpResponse(json, content_type='application/json')
     res = {"msg": 'Only DELETE request is allowed', 'status': False}
     return JsonResponse(res)
+
+
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin, \
+    RetrieveModelMixin, CreateModelMixin, UpdateModelMixin, DestroyModelMixin
+
+
+class StudentList(GenericAPIView, ListModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class StudentRetrieve(GenericAPIView, RetrieveModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
+class StudentCreate(GenericAPIView, CreateModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class StudentUpdate(GenericAPIView, UpdateModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+
+class StudentDelete(GenericAPIView, DestroyModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+"""two classes to handle all the requests,
+for list and create we don't need PK and for update, delete and get we need pk """
+
+
+class StudentListAndCreate(GenericAPIView, CreateModelMixin, ListModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class StudentUpdateAndGetAndDelete(GenericAPIView, UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)

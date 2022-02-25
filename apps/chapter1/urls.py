@@ -26,6 +26,14 @@ urlpatterns = [
     path('update', views.update_student),
     path('delete', views.delete_student),
     path('list', views.get_student),
-    path('classbasedstudent', views.StudentApiView.as_view())
+    path('classbasedstudent', views.StudentApiView.as_view()),
+    path('genericapilist', views.StudentList.as_view()),
+    path('genericapiget/<int:pk>', views.StudentRetrieve.as_view()),
+    path('genericapicreate', views.StudentCreate.as_view()),
+    path('genericapiupdate/<int:pk>', views.StudentUpdate.as_view()),
+    path('genericapidelete/<int:pk>', views.StudentDelete.as_view()),
+    path('genericapideleteputget/<int:pk>', views.StudentUpdateAndGetAndDelete.as_view()),
+    path('genericapilistcreate', views.StudentListAndCreate.as_view()),
+
 
 ]
