@@ -322,3 +322,156 @@ class StudentUpdateAndGetAndDelete(GenericAPIView, UpdateModelMixin, RetrieveMod
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+    """Concrete view classes, where we don't have to define get, post, update etc method. We only need to extend certail classes and we are good to go"""
+
+
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView, \
+    ListCreateAPIView, RetrieveUpdateAPIView, RetrieveDestroyAPIView, RetrieveUpdateDestroyAPIView
+
+
+class ConcreteStudentList(ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentCreate(CreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentRetrieve(RetrieveAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentUpdate(UpdateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentDestroy(DestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentListCreate(ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentRetrieveUpdate(RetrieveUpdateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentRetrieveDestroy(RetrieveDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ConcreteStudentRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+"""View set example, with view-set, we define a router and router will take care of url handling
+We can implement methods such as get, post, list """
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+
+
+class StudentViewSet(viewsets.ViewSet):
+    def list(self, request):
+        print("__________List_____________")
+        print("Basename:", self.basename)
+        print("Action:", self.action)
+        print("Detail:", self.detail)
+        print("Suffix:", self.suffix)
+        print("Name:", self.name)
+        print("Description:", self.description)
+        stu = Student.objects.all()
+        serializer = StudentSerializer(stu, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        print("__________Retrieve_____________")
+        print("Basename:", self.basename)
+        print("Action:", self.action)
+        print("Detail:", self.detail)
+        print("Suffix:", self.suffix)
+        print("Name:", self.name)
+        print("Description:", self.description)
+        if pk is not None:
+            stu = Student.objects.get(id=pk)
+            serializer = StudentSerializer(stu)
+            return Response(serializer.data)
+        return HttpResponse({'msg': 'Id is required'}, content_type='application/json')
+
+    def create(self, request):
+        print("__________Create_____________")
+        print("Basename:", self.basename)
+        print("Action:", self.action)
+        print("Detail:", self.detail)
+        print("Suffix:", self.suffix)
+        print("Name:", self.name)
+        print("Description:", self.description)
+        serializer = StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg': 'Data Created'}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def udpate(self, request, pk=None):
+        print("__________Update_____________")
+        print("Basename:", self.basename)
+        print("Action:", self.action)
+        print("Detail:", self.detail)
+        print("Suffix:", self.suffix)
+        print("Name:", self.name)
+        print("Description:", self.description)
+        stu = Student.objects.get(id=pk)
+
+        serializer = StudentSerializer(stu, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg': 'Data Updated'}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, pk=None):
+        print("__________Partial Update_____________")
+        print("Basename:", self.basename)
+        print("Action:", self.action)
+        print("Detail:", self.detail)
+        print("Suffix:", self.suffix)
+        print("Name:", self.name)
+        print("Description:", self.description)
+        stu = Student.objects.get(id=pk)
+
+        serializer = StudentSerializer(stu, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg': 'Data Updated'}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        print("__________Delete_____________")
+        print("Basename:", self.basename)
+        print("Action:", self.action)
+        print("Detail:", self.detail)
+        print("Suffix:", self.suffix)
+        print("Name:", self.name)
+        print("Description:", self.description)
+
+        stu = Student.objects.get(id=pk)
+        if stu is not None:
+            stu.delete()
+
+            return Response({'msg': 'Data Deleted'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'msg': 'Item Not Found'}, status=status.HTTP_201_CREATED)

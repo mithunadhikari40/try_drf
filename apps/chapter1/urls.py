@@ -18,6 +18,14 @@ from django.urls import path, include
 
 from apps.chapter1 import views
 
+"""Viewset"""
+from rest_framework.routers import DefaultRouter
+
+# creating a router object
+router = DefaultRouter()
+# register student viewset with router
+router.register('studentapiviewset', views.StudentViewSet, basename='studentapiviewset')
+
 urlpatterns = [
     # for students
     path('<int:pk>', views.student_detail),
@@ -35,5 +43,7 @@ urlpatterns = [
     path('genericapideleteputget/<int:pk>', views.StudentUpdateAndGetAndDelete.as_view()),
     path('genericapilistcreate', views.StudentListAndCreate.as_view()),
 
+    #router based
+    path('viewset/',include(router.urls))
 
 ]
