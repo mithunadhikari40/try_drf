@@ -39,15 +39,19 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_spectacular',
     'apps.utils.timestamp.apps.TimestampConfig',
-    'apps.chapter1.apps.Chapter1Config'
+    'apps.chapter1.apps.Chapter1Config',
+    'apps.authentication.apps.AuthenticationConfig',
 ]
-
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+
+    ], "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permission.IsAuthenticated",
+        "rest_framework.permission.AllowAny",
 
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -130,3 +134,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# global authentication and permission classes, instead of specifying in each model classes, we can define globally
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.BasicAuthentication'
+#     ]
+# }

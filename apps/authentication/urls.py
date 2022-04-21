@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.urls import path, include
 
-from apps.chapter1 import views
+from apps.authentication import views
 
 """Viewset"""
 from rest_framework.routers import DefaultRouter
@@ -24,28 +24,10 @@ from rest_framework.routers import DefaultRouter
 # creating a router object
 router = DefaultRouter()
 # register student viewset with router
-router.register('studentapiviewset', views.StudentViewSet, basename='studentapiviewset')
-#model view set
+# model view set
 router.register('studentapimodelviewset', views.StudentModelViewSet, basename='studentapimodelviewset')
 
 urlpatterns = [
-    # for students
-    path('<int:pk>', views.student_detail),
-    path('', views.student_list),
-    path('create', views.create_student),
-    path('update', views.update_student),
-    path('delete', views.delete_student),
-    path('list', views.get_student),
-    path('classbasedstudent', views.StudentApiView.as_view()),
-    path('genericapilist', views.StudentList.as_view()),
-    path('genericapiget/<int:pk>', views.StudentRetrieve.as_view()),
-    path('genericapicreate', views.StudentCreate.as_view()),
-    path('genericapiupdate/<int:pk>', views.StudentUpdate.as_view()),
-    path('genericapidelete/<int:pk>', views.StudentDelete.as_view()),
-    path('genericapideleteputget/<int:pk>', views.StudentUpdateAndGetAndDelete.as_view()),
-    path('genericapilistcreate', views.StudentListAndCreate.as_view()),
-
-    # router based
     path('viewset/', include(router.urls))
 
 ]

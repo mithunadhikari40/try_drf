@@ -475,3 +475,19 @@ class StudentViewSet(viewsets.ViewSet):
 
             return Response({'msg': 'Data Deleted'}, status=status.HTTP_204_NO_CONTENT)
         return Response({'msg': 'Item Not Found'}, status=status.HTTP_201_CREATED)
+
+
+"""Modal view set, where it provides all of the actions and other method"""
+
+
+class StudentModelViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+"""We also have other model view set such as ReadOnlyModelViewSet which only allows reading, like list and retrieve"""
+
+
+class StudentModelReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
