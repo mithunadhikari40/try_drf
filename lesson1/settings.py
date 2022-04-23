@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.utils.timestamp.apps.TimestampConfig',
     'apps.chapter1.apps.Chapter1Config',
     'apps.authentication.apps.AuthenticationConfig',
+    'apps.user.apps.UserConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -50,8 +51,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
 
     ], "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permission.IsAuthenticated",
-        "rest_framework.permission.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",
 
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",

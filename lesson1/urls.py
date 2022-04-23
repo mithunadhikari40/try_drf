@@ -29,5 +29,8 @@ urlpatterns = [
     path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
     path('student/', include('apps.chapter1.urls'), name="chapter1"),
     path('authentication/', include('apps.authentication.urls'), name="authentication"),
+    # default auth route and other rest_framework routes
+    path('auth/', include('rest_framework.urls', namespace="rest_framework")),
+    path('user/', include('apps.user.urls'), name="user"),
 
 ]

@@ -17,8 +17,7 @@ Including another URLconf
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
 
-from apps.authentication import views
-from .auth_tokenization import AuthTokenization
+from apps.user import views
 
 """Viewset"""
 from rest_framework.routers import DefaultRouter
@@ -27,14 +26,9 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 # register student viewset with router
 # model view set
-router.register('studentapimodelviewset', views.StudentModelViewSet, basename='studentapimodelviewset')
+router.register('user', views.StudentModelViewSet, basename='user')
 
 urlpatterns = [
-    path('viewset/', include(router.urls)),
-    path('<int:pk>', views.student_detail),
-    path('', views.student_list),
-    # allow the user to create a token using a post request, they need to pass the username and password
-    # path('createtoken', obtain_auth_token)
-    path('createtoken', AuthTokenization.as_view())
+    path('', include(router.urls)),
 
 ]
