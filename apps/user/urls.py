@@ -19,6 +19,9 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 from apps.user import views
 
+"""Importing jwt token related libs"""
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+
 """Viewset"""
 from rest_framework.routers import DefaultRouter
 
@@ -30,5 +33,9 @@ router.register('user', views.StudentModelViewSet, basename='user')
 
 urlpatterns = [
     path('', include(router.urls)),
+    # JWT token related routes
+    path('gettoken/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path('refreshtoken/', TokenRefreshView.as_view(), name="token_refresh"),
+    path('verifytoken/', TokenVerifyView.as_view(), name="token_verify"),
 
 ]
