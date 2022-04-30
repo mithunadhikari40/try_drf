@@ -71,9 +71,14 @@ REST_FRAMEWORK = {
         'custom_rate_annon': '3/min',
         'user': '1000/day',
     },
-    'DEFAULT_FILTER_BACKENDS': (
+    'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+    ],
+    # search param when defining search for e.g http://localhost:7000/user/search_students/?search=as
+    # defines what should be the name of param in place of search
+    # 'SEARCH_PARAM': 'q',
+    # now it will become  http://localhost:7000/user/search_students/?q=as
+    'SEARCH_PARAM': 'search'
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

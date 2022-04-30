@@ -41,5 +41,7 @@ urlpatterns = [
     path('filter_student/', views.StudentListView.as_view(), name="filter_student"),
     path('add_student/', views.StudentCreateView.as_view(), name="add_student"),
     path('django_filter/', views.StudentListViewDjangoFilter.as_view(), name="django_filter"),
+    path('search_students/', views.StudentListViewSearch.as_view(), name="django_filter"),
+    path('order_students/', views.StudentListViewOrder.as_view(), name="django_filter"),
 
 ]

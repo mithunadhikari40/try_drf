@@ -1,5 +1,6 @@
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import Throttled
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
@@ -77,10 +78,59 @@ class StudentListView(ListAPIView):
         user = self.request.user
         return Student.objects.filter(by=user)
 
+
+from django_filters.rest_framework import DjangoFilterBackend
+
+
 class StudentListViewDjangoFilter(ListAPIView):
     queryset = Student.objects.all()
 
     serializer_class = StudentSerializer
+    """Not needed if this is mentioned in settings.py"""
+    # filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['city', 'roll']
+
+
+"Simple search with django admin search, search is available for text fields only"
+
+
+class StudentListViewSearch(ListAPIView):
+    queryset = Student.objects.all()
+
+    serializer_class = StudentSerializer
+    filter_backends = [SearchFilter]
+
+    # search_fields = ['^city', '^name']
+    # search_fields = ['=city', '=name']
+    search_fields = ['city', 'name']
+    # search_fields = ['@city']
+
+    """Search options:"""
+    # http://localhost:7000/user/search_students/?search=as
+    # ^ - starts with
+    # = - full text search
+    # $ - regex search
+    # nothing then contains method will be applied
+
+
+"""Simple order by. Ordering fields available are list of fields that you want the response to be ordered with
+Optionally if we need to order by every field we can specify something like this
+ordering_fields='__all__'
+The url to order by roll ascending is 
+http://localhost:7000/user/order_students/?ordering=roll
+The url to order by roll descending is 
+http://localhost:7000/user/order_students/?ordering=-roll"""
+
+
+class StudentListViewOrder(ListAPIView):
+    queryset = Student.objects.all()
+
+    serializer_class = StudentSerializer
+    filter_backends = [OrderingFilter]
+
+    ordering_fields = ['city', 'name', 'roll']
+    # ordering_fields ='__all__'
 
 
 class StudentCreateView(CreateAPIView):
