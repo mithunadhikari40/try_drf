@@ -21,6 +21,7 @@ class Student(TimeStamp):
     name = models.CharField(max_length=100)
     roll = models.IntegerField(unique=True)
     city = models.CharField(max_length=100)
+    by = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):
         return self.name

@@ -30,6 +30,7 @@ router = DefaultRouter()
 # register student viewset with router
 # model view set
 router.register('user', views.StudentModelViewSet, basename='user')
+router.register('throttle', views.ThrottleStudentModelViewSet, basename='throttle')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -37,5 +38,8 @@ urlpatterns = [
     path('gettoken/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path('refreshtoken/', TokenRefreshView.as_view(), name="token_refresh"),
     path('verifytoken/', TokenVerifyView.as_view(), name="token_verify"),
+    path('filter_student/', views.StudentListView.as_view(), name="filter_student"),
+    path('add_student/', views.StudentCreateView.as_view(), name="add_student"),
+    path('django_filter/', views.StudentListViewDjangoFilter.as_view(), name="django_filter"),
 
 ]

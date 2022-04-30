@@ -4,7 +4,7 @@ from .models import Student
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'roll', 'city', 'created_at', 'updated_at']
+    list_display = ['id', 'name', 'roll', 'city', 'by', 'created_at', 'updated_at']
 
 
 admin.site.register(Student, StudentAdmin)

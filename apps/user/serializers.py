@@ -26,6 +26,7 @@ class StudentSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100, validators=[start_with_vowel])
     roll = serializers.IntegerField()
     city = serializers.CharField(max_length=100)
+    by = serializers.CharField(max_length=100)
 
     def create(self, validated_data):
         return Student.objects.create(**validated_data)
@@ -34,6 +35,7 @@ class StudentSerializer(serializers.Serializer):
         instance.name = validated_data.get('name', instance.name)
         instance.roll = validated_data.get('roll', instance.roll)
         instance.city = validated_data.get('city', instance.city)
+        instance.by = validated_data.get('city', instance.by)
         instance.save()
         return instance
 
@@ -53,6 +55,7 @@ class StudentSerializer(serializers.Serializer):
     def validate(self, data):
         name = data.get('name')
         city = data.get('city')
+        by = data.get('by')
         # roll = data.get('roll')
         # if roll >= 200:
         #     raise serializers.ValidationError("All 200 seats are filled.")
