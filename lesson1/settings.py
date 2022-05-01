@@ -78,7 +78,12 @@ REST_FRAMEWORK = {
     # defines what should be the name of param in place of search
     # 'SEARCH_PARAM': 'q',
     # now it will become  http://localhost:7000/user/search_students/?q=as
-    'SEARCH_PARAM': 'search'
+    'SEARCH_PARAM': 'search',
+    # page number pagination,  it accepts a single parameter page number in the request query parameter (global),
+    # can be set for individual set
+    # url becomes something like this http://localhost:7000/user/paginate_students/?page=2
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 3,
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

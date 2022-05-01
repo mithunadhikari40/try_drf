@@ -41,7 +41,10 @@ urlpatterns = [
     path('filter_student/', views.StudentListView.as_view(), name="filter_student"),
     path('add_student/', views.StudentCreateView.as_view(), name="add_student"),
     path('django_filter/', views.StudentListViewDjangoFilter.as_view(), name="django_filter"),
-    path('search_students/', views.StudentListViewSearch.as_view(), name="django_filter"),
-    path('order_students/', views.StudentListViewOrder.as_view(), name="django_filter"),
+    path('search_students/', views.StudentListViewSearch.as_view(), name="search_students"),
+    path('order_students/', views.StudentListViewOrder.as_view(), name="order_students"),
+    path('paginate_students/', views.StudentListViewPagination.as_view(), name="paginate_students"),
+    path('limit_offset_students/', views.StudentListViewLimitOffsetPagination.as_view(), name="limit_offset_students"),
+    path('cursor_paginate/', views.StudentListViewCursorPagination.as_view(), name="cursor_paginate"),
 
 ]

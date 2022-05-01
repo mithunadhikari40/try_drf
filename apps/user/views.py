@@ -2,9 +2,11 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import Throttled
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
 from .custom_authentication import CustomAuthentication
+from .custom_pagination import CustomNumberPagination, CustomLimitOffsetPagination, CustomCursorPagination
 
 """Modal view set, where it provides all of the actions and other method"""
 
@@ -131,6 +133,43 @@ class StudentListViewOrder(ListAPIView):
 
     ordering_fields = ['city', 'name', 'roll']
     # ordering_fields ='__all__'
+
+
+"""Pagination that takes global settings"""
+
+# class StudentListViewPagination(ListAPIView):
+#     queryset = Student.objects.all()
+#     serializer_class = StudentSerializer
+#     """When we need to set attributes in PageNumberPagination class, we are ought to create a custom implementaion of
+#     it and then override attributes there """
+#     # pagination_class = PageNumberPagination
+
+
+"""Pagination with custom page numer attributes"""
+
+
+class StudentListViewPagination(ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    pagination_class = CustomNumberPagination
+
+
+"""Pagination with custom offset and limit attributes"""
+
+
+class StudentListViewLimitOffsetPagination(ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    pagination_class = CustomLimitOffsetPagination
+
+
+"""Pagination with cursor attributes"""
+
+
+class StudentListViewCursorPagination(ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    pagination_class = CustomCursorPagination
 
 
 class StudentCreateView(CreateAPIView):
