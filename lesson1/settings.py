@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'apps.utils.timestamp.apps.TimestampConfig',
     'apps.chapter1.apps.Chapter1Config',
+    'apps.serialization_relation.apps.SerializationRelationConfig',
     'apps.authentication.apps.AuthenticationConfig',
     'apps.user.apps.UserConfig',
 ]
@@ -84,6 +85,10 @@ REST_FRAMEWORK = {
     # url becomes something like this http://localhost:7000/user/paginate_students/?page=2
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 3,
+    # disable browsable API, API with option, form and etc provided by swagger and rest framework
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer'
+    # ]
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

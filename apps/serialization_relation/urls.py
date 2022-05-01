@@ -19,19 +19,17 @@ from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+from rest_framework.routers import DefaultRouter
 
+from .views import SingerViewSet, SongViewSet, SingerHyperLinkedViewSet, SongNestedRelatedViewSet, \
+    SingerNestedRelatedViewSet
+
+router = DefaultRouter()
+router.register('singer', SingerViewSet, basename='singer')
+router.register('song', SongViewSet, basename='song')
+router.register('singer_nested', SingerNestedRelatedViewSet, basename='singer_nested')
+router.register('songs_nested', SongNestedRelatedViewSet, basename='song_nested')
+router.register('singer_hyperlink', SingerHyperLinkedViewSet, basename='singer_hyperlink')
 urlpatterns = [
-    path('admin', admin.site.urls),
-    path('auth-token', obtain_auth_token, name='api_token_auth'),
-
-    # for the docs
-    path('schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
-    path('student/', include('apps.chapter1.urls'), name="chapter1"),
-    path('authentication/', include('apps.authentication.urls'), name="authentication"),
-    # default auth route and other rest_framework routes
-    path('auth/', include('rest_framework.urls', namespace="rest_framework")),
-    path('user/', include('apps.user.urls'), name="user"),
-    path('serialization_relation/', include('apps.serialization_relation.urls'), name="serialization_relation"),
-
+    path('', include(router.urls)),
 ]
